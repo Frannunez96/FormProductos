@@ -8,6 +8,6 @@ const ProductoSchema = new mongoose.Schema({
     baje: { type: Boolean, default: false } 
 });
 
-const Producto = mongoose.model('Producto', ProductoSchema);
+const Producto = mongoose.model('Product', ProductoSchema);
 
 module.exports = Producto;

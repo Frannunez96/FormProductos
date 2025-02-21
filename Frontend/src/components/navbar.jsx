@@ -46,7 +46,12 @@ const Navbar = () => {
                 Contacto
               </NavLink>
             </li>
-            <CarritoModal />
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/productos">
+                Productos
+              </NavLink>
+            </li>
+              <CarritoModal />
           </ul>
         </div>
       </div>

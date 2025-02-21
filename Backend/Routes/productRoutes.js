@@ -1,12 +1,14 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
 const Producto = require('../models/producto');
 const { getProducts, createProduct, deleteProduct, updateProduct } = require('../controllers/productoControllers'); 
 
 
 router.get('/product', getProducts )
 router.post('/product', createProduct)
-    
+router.delete('/product/:id', deleteProduct)
+router.put('/product/:id', updateProduct)  
 
 // 📌 Obtener productos con descuentos (`baje: true`)
 router.get('/baje', async (req, res) => {
@@ -20,17 +22,6 @@ router.get('/baje', async (req, res) => {
 });
 
 
-// 📌 Eliminar un producto
-router.delete('/:id', async (req, res) => {
-    try {
-        const productoId = req.params.id;
-        const deletedProduct = await Producto.findByIdAndDelete(productoId);
-        res.json(deletedProduct);
-    } catch (error) {
-        console.error('Error al eliminar el producto:', error);
-        res.status(500).json({ error: error.message });
-    }
-});
 
 
 module.exports = router;

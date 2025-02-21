@@ -39,19 +39,27 @@ const agregarAlCarrito = async (req, res) => {
     }
 };
 
-// Obtener los productos del carrito
 const obtenerCarrito = async (req, res) => {
     try {
-        const carrito = await Carrito.findOne().populate("productos.productoId");
-        if (!carrito) {
-            return res.status(404).json({ message: "Carrito vacío" });
-        }
-        res.status(200).json(carrito);
+      // Obtén el carrito, poblado con los detalles de los productos
+      const carrito = await Carrito.find()
+        .populate('productos.productoId')  // Poblar los datos de producto relacionados
+        .exec(); // Asegúrate de ejecutar la consulta
+  
+      // Si no hay carrito, responde con un mensaje
+      if (!carrito || carrito.length === 0) {
+        return res.status(404).json({ message: 'Carrito vacío o no encontrado' });
+      }
+  
+      // Devuelve el carrito con los productos y su precio
+      res.json(carrito);
     } catch (error) {
-        res.status(500).json({ message: "Error al obtener el carrito", error });
+      console.error('Error al obtener el carrito:', error);
+      res.status(500).json({ message: 'Error al obtener el carrito', error });
     }
-};
+  };
 
+  
 // Función para calcular el precio total
 const calcularPrecioTotal = async (carrito) => {
     let total = 0;
